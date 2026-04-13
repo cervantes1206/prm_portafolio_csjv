@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{% if modo_edicion %}Editar talento{% else %}Nuevo talento{% endif %}{% endblock %}
+{% block title %}{% if modo_edicion %}Editar habilidad técnica{% else %}Nueva habilidad técnica{% endif %}{% endblock %}
 
 {% block content %}
 <div class="layout-shell">
@@ -28,8 +28,8 @@
         <div class="mobile-menu-panel d-lg-none" id="mobileMenuPanel">
             <div class="nav-section-title">Menú</div>
             <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
-            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
-            <a href="{% url 'talent_list' %}" class="sidebar-link active">Talentos</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Habilidades socioemocionales</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link active">Inmersiones</a>
             <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
             <a href="#" class="sidebar-link">Valores</a>
             <a href="#" class="sidebar-link">Recomendación</a>
@@ -38,8 +38,8 @@
         <div class="d-none d-lg-block">
             <div class="nav-section-title">Menú</div>
             <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
-            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
-            <a href="{% url 'talent_list' %}" class="sidebar-link active">Talentos</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Habilidades socioemocionales</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link active">Inmersiones</a>
             <a href="#" class="sidebar-link">Intereses</a>
             <a href="#" class="sidebar-link">Valores</a>
             <a href="#" class="sidebar-link">Recomendación</a>
@@ -48,8 +48,8 @@
 
     <header class="dashboard-header">
         <div class="header-title">
-            <h4>{% if modo_edicion %}Editar talento{% else %}Nuevo talento{% endif %}</h4>
-            <p>Registra y actualiza tus talentos personales</p>
+            <h4>{% if modo_edicion %}Editar habilidad técnica{% else %}Nueva habilidad técnica{% endif %}</h4>
+            <p>Registra y actualiza tus habilidades técnicas personales</p>
         </div>
         <div class="header-actions">
             <a href="{% url 'talent_list' %}" class="btn btn-outline-secondary btn-sm">Volver al listado</a>
@@ -60,7 +60,7 @@
     <main class="dashboard-main">
         <div class="mb-3">
             <h3 class="section-title mb-0">
-                {% if modo_edicion %}Actualizar talento{% else %}Registrar talento{% endif %}
+                {% if modo_edicion %}Actualizar habilidad técnica{% else %}Registrar habilidad técnica{% endif %}
             </h3>
         </div>
 
@@ -101,7 +101,7 @@
 
                 <div class="d-flex gap-2 flex-wrap">
                     <button type="submit" class="btn btn-primary">
-                        {% if modo_edicion %}Guardar cambios{% else %}Guardar talento{% endif %}
+                        {% if modo_edicion %}Guardar cambios{% else %}Guardar habilidad técnica{% endif %}
                     </button>
 
                     <a href="{% url 'talent_list' %}" class="btn btn-outline-secondary">
@@ -118,7 +118,7 @@
         <div class="mentor-card">
             <h6>Orientación</h6>
             <div class="mentor-note">
-                Describe el talento con claridad y enfócate en evidencias concretas de su desarrollo.
+                Describe la habilidad técnica con claridad y enfócate en evidencias concretas de su desarrollo.
             </div>
             <div class="mentor-note">
                 Recuerda que el nivel va de 1 a 5 y luego se podrá visualizar como porcentaje.
@@ -136,8 +136,8 @@
 
 <nav class="mobile-bottom-nav d-lg-none">
     <a href="{% url 'student_dashboard' %}" class="mobile-bottom-link">Perfil</a>
-    <a href="{% url 'strength_list' %}" class="mobile-bottom-link">Fortalezas</a>
-    <a href="{% url 'talent_list' %}" class="mobile-bottom-link active">Talentos</a>
+    <a href="{% url 'strength_list' %}" class="mobile-bottom-link">Habilidades socioemocionales</a>
+    <a href="{% url 'talent_list' %}" class="mobile-bottom-link active">Inmersiones</a>
     <a href="#" class="mobile-bottom-link">Intereses</a>
     <a href="#" class="mobile-bottom-link">Valores</a>
 </nav>

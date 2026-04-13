@@ -96,8 +96,8 @@ class Strength(models.Model):
 
     class Meta:
         db_table = "strengths"
-        verbose_name = "fortaleza"
-        verbose_name_plural = "fortalezas"
+        verbose_name = "habilidad socioemocional"
+        verbose_name_plural = "habilidades socioemocionales"
         ordering = ["-nivel_desarrollo", "titulo"]
 
     def __str__(self):
@@ -133,8 +133,8 @@ class Talent(models.Model):
 
     class Meta:
         db_table = "talents"
-        verbose_name = "talento"
-        verbose_name_plural = "talentos"
+        verbose_name = "habilidad técnica"
+        verbose_name_plural = "habilidades técnicas"
         ordering = ["-nivel_desarrollo", "titulo"]
 
     def __str__(self):

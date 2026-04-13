@@ -7,15 +7,23 @@ from .views import (
 )
 
 urlpatterns = [
-    path("fortalezas/", strength_list, name="strength_list"),
-    path("fortalezas/nueva/", strength_create, name="strength_create"),
-    path("fortalezas/<int:pk>/editar/", strength_update, name="strength_update"),
-    path("fortalezas/<int:pk>/eliminar/", strength_delete, name="strength_delete"),
+    path("habilidades-socioemocionales/", strength_list, name="strength_list"),
+    path("fortalezas/", strength_list),
+    path("habilidades-socioemocionales/nueva/", strength_create, name="strength_create"),
+    path("fortalezas/nueva/", strength_create),
+    path("habilidades-socioemocionales/<int:pk>/editar/", strength_update, name="strength_update"),
+    path("fortalezas/<int:pk>/editar/", strength_update),
+    path("habilidades-socioemocionales/<int:pk>/eliminar/", strength_delete, name="strength_delete"),
+    path("fortalezas/<int:pk>/eliminar/", strength_delete),
 
-    path("talentos/", talent_list, name="talent_list"),
-    path("talentos/nuevo/", talent_create, name="talent_create"),
-    path("talentos/<int:pk>/editar/", talent_update, name="talent_update"),
-    path("talentos/<int:pk>/eliminar/", talent_delete, name="talent_delete"),
+    path("inmersiones/", talent_list, name="talent_list"),
+    path("talentos/", talent_list),
+    path("inmersiones/nueva/", talent_create, name="talent_create"),
+    path("talentos/nuevo/", talent_create),
+    path("inmersiones/<int:pk>/editar/", talent_update, name="talent_update"),
+    path("talentos/<int:pk>/editar/", talent_update),
+    path("inmersiones/<int:pk>/eliminar/", talent_delete, name="talent_delete"),
+    path("talentos/<int:pk>/eliminar/", talent_delete),
 
     path("intereses/", interest_list, name="interest_list"),
     path("intereses/nuevo/", interest_create, name="interest_create"),

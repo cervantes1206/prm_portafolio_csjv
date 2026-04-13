@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Mis fortalezas{% endblock %}
+{% block title %}Mis habilidades socioemocionales{% endblock %}
 
 {% block content %}
 <div class="layout-shell">
@@ -28,8 +28,8 @@
         <div class="mobile-menu-panel d-lg-none" id="mobileMenuPanel">
             <div class="nav-section-title">Menú</div>
             <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
-            <a href="{% url 'strength_list' %}" class="sidebar-link active">Fortalezas</a>
-            <a href="{% url 'talent_list' %}" class="sidebar-link">Talentos</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link active">Habilidades socioemocionales</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Inmersiones</a>
            <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
             <a href="#" class="sidebar-link">Valores</a>
             <a href="#" class="sidebar-link">Recomendación</a>
@@ -38,9 +38,9 @@
         <div class="d-none d-lg-block">
             <div class="nav-section-title">Menú</div>
             <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
-            <a href="{% url 'strength_list' %}" class="sidebar-link active">Fortalezas</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link active">Habilidades socioemocionales</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Inmersiones</a>
             <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
-            <a href="#" class="sidebar-link">Intereses</a>
             <a href="#" class="sidebar-link">Valores</a>
             <a href="#" class="sidebar-link">Recomendación</a>
         </div>
@@ -48,18 +48,18 @@
 
     <header class="dashboard-header">
         <div class="header-title">
-            <h4>Mis fortalezas</h4>
-            <p>Gestiona y revisa tus fortalezas personales</p>
+            <h4>Mis habilidades socioemocionales</h4>
+            <p>Gestiona y revisa tus habilidades socioemocionales personales</p>
         </div>
         <div class="header-actions">
-            <a href="{% url 'strength_create' %}" class="btn btn-primary btn-sm">Nueva fortaleza</a>
+            <a href="{% url 'strength_create' %}" class="btn btn-primary btn-sm">Nueva habilidad socioemocional</a>
             <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
         </div>
     </header>
 
     <main class="dashboard-main">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="section-title mb-0">Listado de fortalezas</h3>
+            <h3 class="section-title mb-0">Listado de habilidades socioemocionales</h3>
         </div>
 
         {% if strengths %}
@@ -91,7 +91,7 @@
                                     Editar
                                 </a>
 
-                                <form method="post" action="{% url 'strength_delete' strength.pk %}" onsubmit="return confirm('¿Deseas eliminar esta fortaleza?');">
+                                <form method="post" action="{% url 'strength_delete' strength.pk %}" onsubmit="return confirm('¿Deseas eliminar esta habilidad socioemocional?');">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                         Eliminar
@@ -104,7 +104,7 @@
             </div>
         {% else %}
             <div class="alert alert-info">
-                Aún no tienes fortalezas registradas.
+                Aún no tienes habilidades socioemocionales registradas.
             </div>
         {% endif %}
     </main>
@@ -118,7 +118,7 @@
                 Aquí el mentor podrá dejar observaciones personalizadas para el estudiante.
             </div>
             <div class="mentor-note">
-                Este espacio podrá mostrar retroalimentación sobre fortalezas y avances.
+                Este espacio podrá mostrar retroalimentación sobre habilidades socioemocionales y avances.
             </div>
         </div>
 
@@ -133,8 +133,8 @@
 
 <nav class="mobile-bottom-nav d-lg-none">
     <a href="{% url 'student_dashboard' %}" class="mobile-bottom-link">Perfil</a>
-    <a href="{% url 'strength_list' %}" class="mobile-bottom-link active">Fortalezas</a>
-    <a href="{% url 'talent_list' %}" class="mobile-bottom-link">Talentos</a>
+    <a href="{% url 'strength_list' %}" class="mobile-bottom-link active">Habilidades socioemocionales</a>
+    <a href="{% url 'talent_list' %}" class="mobile-bottom-link">Inmersiones</a>
     <a href="#" class="mobile-bottom-link">Intereses</a>
     <a href="#" class="mobile-bottom-link">Valores</a>
 </nav>
