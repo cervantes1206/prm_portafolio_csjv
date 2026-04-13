@@ -1,5 +1,6 @@
-/vendor/
-.env
-/storage/uploads/
-/storage/certificados/
-/storage/exports/
+venv/
+__pycache__/
+*.pyc
+db.sqlite3
+media/
+.DS_Store

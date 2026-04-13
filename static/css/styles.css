@@ -1,0 +1,755 @@
+body.app-body {
+    margin: 0;
+    background-color: #f4f7fb;
+    color: #1f2937;
+    font-family: Arial, sans-serif;
+}
+
+/* =========================
+   LOGIN
+========================= */
+.fondo-login {
+    background: linear-gradient(135deg, #1c264e, #12a5df);
+    padding: 1rem;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 18px;
+    border: none;
+}
+
+.titulo-principal {
+    color: #1c264e;
+    font-weight: 700;
+}
+
+.btn-principal {
+    background-color: #12a5df;
+    color: white;
+    border: none;
+}
+
+.btn-principal:hover {
+    background-color: #0d8fc2;
+    color: white;
+}
+
+/* =========================
+   LAYOUT GENERAL
+========================= */
+.layout-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.dashboard-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    flex-shrink: 0;
+}
+
+.header-title h4 {
+    margin: 0;
+    color: #1c264e;
+    font-weight: 800;
+}
+
+.header-title p {
+    margin: 0.2rem 0 0;
+    color: #6b7280;
+    font-size: 0.92rem;
+}
+
+.header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.dashboard-sidebar {
+    background: linear-gradient(180deg, #1c264e, #25356e);
+    color: white;
+    padding: 1rem;
+    order: 1;
+    overflow-y: auto;
+}
+
+.dashboard-main {
+    padding: 1rem 1rem 5.5rem;
+    order: 2;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.dashboard-aside {
+    background-color: #f9fbff;
+    border-top: 1px solid #e5e7eb;
+    padding: 1rem;
+    order: 3;
+    overflow-y: auto;
+}
+
+/* =========================
+   BRAND / LOGO
+========================= */
+.brand-box {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.logo-box {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 2px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.institution-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-text h5 {
+    margin: 0;
+    color: white;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.brand-text p {
+    margin: 0.2rem 0 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.82rem;
+    line-height: 1.2;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.student-mini-card {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.student-mini-card .student-name {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.nav-section-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin: 1rem 0 0.75rem;
+}
+
+.sidebar-link {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    transition: 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: white;
+}
+
+/* =========================
+   MOBILE MENU
+========================= */
+.mobile-menu-toggle {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: rgba(255, 255, 255, 0.08);
+    color: white;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.mobile-menu-panel {
+    display: none;
+}
+
+.mobile-menu-panel.open {
+    display: block;
+}
+
+.mobile-bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    background: #ffffff;
+    border-top: 1px solid #dbe3ef;
+    box-shadow: 0 -6px 18px rgba(15, 23, 42, 0.08);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0.35rem 0.25rem calc(0.35rem + env(safe-area-inset-bottom));
+}
+
+.mobile-bottom-link {
+    text-decoration: none;
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.45rem 0.2rem;
+    border-radius: 12px;
+    line-height: 1.15;
+}
+
+.mobile-bottom-link.active {
+    color: #1c264e;
+    background-color: #eef4ff;
+}
+
+/* =========================
+   TITULOS Y TARJETAS
+========================= */
+.section-title {
+    color: #1c264e;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.info-card,
+.mentor-card,
+.strength-card,
+.form-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* =========================
+   PERFIL HERO
+========================= */
+.profile-hero-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    padding: 1rem;
+    margin-bottom: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.profile-hero-left {
+    display: flex;
+    justify-content: center;
+}
+
+.student-photo-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.student-photo-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.student-photo {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 4px solid #dbe7f3;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.10);
+}
+
+.student-photo-placeholder {
+    width: 160px;
+    height: 160px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #cdd8ee, #eef4ff);
+    color: #1c264e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.photo-edit-button {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #1c264e;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.photo-edit-button:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+.profile-badge {
+    display: inline-block;
+    background-color: #eaf4ff;
+    color: #1c264e;
+    border-radius: 999px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.profile-student-name {
+    color: #1c264e;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.profile-summary-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+.profile-summary-item {
+    background-color: #f7faff;
+    border: 1px solid #e4edf8;
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+}
+
+.profile-summary-label {
+    display: block;
+    font-size: 0.78rem;
+    color: #6b7280;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+
+.profile-summary-value {
+    display: block;
+    color: #111827;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+/* =========================
+   TARJETAS DE CONTENIDO
+========================= */
+.strength-card {
+    padding: 1rem;
+    height: auto;
+}
+
+.strength-title {
+    font-weight: 700;
+    color: #1c264e;
+    margin-bottom: 0.5rem;
+}
+
+.strength-meta {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+}
+
+.progress {
+    height: 12px;
+    border-radius: 999px;
+    background-color: #dbe7f3;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #12a5df, #1c264e);
+    border-radius: 999px;
+}
+
+/* =========================
+   CHARTS
+========================= */
+.chart-card-adaptive {
+    padding: 1rem;
+}
+
+.chart-card-interest {
+    padding-top: 1.1rem;
+}
+
+.chart-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.chart-card-kicker {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #1c264e;
+    letter-spacing: 0.04em;
+}
+
+.chart-canvas-radar {
+    position: relative;
+    width: 100%;
+    min-height: 220px;
+    max-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-canvas-bars {
+    position: relative;
+    width: 100%;
+}
+
+.chart-canvas-bars-1 { height: 110px; }
+.chart-canvas-bars-2 { height: 145px; }
+.chart-canvas-bars-3 { height: 180px; }
+.chart-canvas-bars-4 { height: 220px; }
+.chart-canvas-bars-5 { height: 255px; }
+
+.chart-canvas-doughnut {
+    position: relative;
+    width: 100%;
+    height: 260px;
+}
+
+canvas#strengthsRadarChart {
+    width: 100% !important;
+    max-width: 340px;
+    max-height: 260px !important;
+    display: block;
+    margin: 0 auto;
+}
+
+canvas#talentsBarChart,
+canvas#interestsDoughnutChart {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+/* =========================
+   ASIDE DERECHO / MENTOR
+========================= */
+.mentor-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.mentor-note {
+    background-color: #eef6ff;
+    border-left: 4px solid #12a5df;
+    padding: 0.75rem;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.placeholder-chip {
+    display: inline-block;
+    background-color: #e8eef9;
+    color: #1c264e;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    margin: 0.25rem 0.25rem 0 0;
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+.form-card {
+    padding: 1rem;
+}
+
+.range-value-box {
+    background-color: #eef6ff;
+    border: 1px solid #cfe6f7;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    font-weight: 700;
+    color: #1c264e;
+    margin-top: 0.5rem;
+}
+
+.btn,
+.form-control,
+.form-select {
+    min-height: 44px;
+}
+
+.form-range {
+    width: 100%;
+}
+
+/* =========================
+   FOTO / PREVIEW
+========================= */
+.photo-preview-card {
+    display: flex;
+    justify-content: center;
+}
+
+.photo-preview-frame {
+    width: 220px;
+    height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 4px solid #dbe7f3;
+    background: linear-gradient(135deg, #cdd8ee, #eef4ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.student-photo-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    display: block;
+}
+
+.preview-placeholder {
+    width: 100%;
+    height: 100%;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 991px) {
+    .dashboard-sidebar {
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    .d-lg-none.mobile-menu-toggle {
+        display: block !important;
+    }
+
+    .d-lg-none.mobile-menu-panel {
+        display: none !important;
+    }
+
+    .d-lg-none.mobile-menu-panel.open {
+        display: block !important;
+    }
+
+    .d-none.d-lg-block {
+        display: none !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .brand-box {
+        gap: 0.7rem;
+        margin-bottom: 1rem;
+    }
+
+    .logo-box {
+        width: 48px;
+        height: 48px;
+    }
+
+    .brand-text h5 {
+        font-size: 0.95rem;
+    }
+
+    .brand-text p {
+        font-size: 0.76rem;
+    }
+
+    .chart-canvas-radar {
+        min-height: 200px;
+        max-height: 240px;
+    }
+
+    .chart-canvas-bars-1 { height: 100px; }
+    .chart-canvas-bars-2 { height: 130px; }
+    .chart-canvas-bars-3 { height: 165px; }
+    .chart-canvas-bars-4 { height: 195px; }
+    .chart-canvas-bars-5 { height: 230px; }
+
+    .chart-canvas-doughnut {
+        height: 230px;
+    }
+
+    canvas#strengthsRadarChart {
+        max-width: 280px;
+        max-height: 220px !important;
+    }
+}
+
+/* =========================
+   TABLET
+========================= */
+@media (min-width: 768px) {
+    .dashboard-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.25rem;
+    }
+
+    .dashboard-main,
+    .dashboard-aside,
+    .dashboard-sidebar {
+        padding: 1.25rem;
+    }
+
+    .profile-hero-card {
+        padding: 1.25rem;
+    }
+
+    .profile-summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* =========================
+   DESKTOP
+========================= */
+@media (min-width: 992px) {
+    .layout-shell {
+        display: grid;
+        grid-template-columns: 240px 1fr 300px;
+        grid-template-rows: 72px 1fr;
+        grid-template-areas:
+            "sidebar header header"
+            "sidebar main aside";
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .dashboard-sidebar {
+        grid-area: sidebar;
+        order: initial;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .dashboard-header {
+        grid-area: header;
+        order: initial;
+    }
+
+    .dashboard-main {
+        grid-area: main;
+        order: initial;
+        padding: 1.5rem;
+        overflow-y: auto;
+        min-height: 0;
+    }
+
+    .dashboard-aside {
+        grid-area: aside;
+        order: initial;
+        border-top: none;
+        border-left: 1px solid #e5e7eb;
+        padding: 1.5rem 1rem;
+        overflow-y: auto;
+    }
+
+    .profile-hero-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .profile-hero-left {
+        width: 220px;
+        flex-shrink: 0;
+    }
+
+    .profile-hero-right {
+        flex: 1;
+    }
+
+    .student-photo,
+    .student-photo-placeholder {
+        width: 190px;
+        height: 190px;
+    }
+
+    .mobile-menu-toggle,
+    .mobile-menu-panel,
+    .mobile-bottom-nav {
+        display: none !important;
+    }
+}
+
+/* =========================
+   LARGE DESKTOP
+========================= */
+@media (min-width: 1200px) {
+    .layout-shell {
+        grid-template-columns: 260px 1fr 320px;
+    }
+
+    .chart-canvas-radar {
+        min-height: 240px;
+        max-height: 290px;
+    }
+
+    .chart-canvas-doughnut {
+        height: 280px;
+    }
+}

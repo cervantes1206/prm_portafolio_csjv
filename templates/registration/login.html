@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center fondo-login">
+    <div class="card shadow-lg p-4 login-card" style="max-width: 420px; width: 100%;">
+        <div class="text-center mb-4">
+            <h2 class="titulo-principal">PRM Portafolio</h2>
+            <p class="text-muted mb-0">Ingreso de estudiantes</p>
+        </div>
+
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                Correo o documento incorrectos. Verifica tus datos.
+            </div>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+                <div class="alert alert-warning" role="alert">
+                    Tu cuenta no tiene acceso a esta página.
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Correo institucional</label>
+                <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    placeholder="correo@institucion.edu.co"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Documento</label>
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Documento del estudiante"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-principal w-100">Ingresar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Actualizar fotografía{% endblock %}
+
+{% block content %}
+<div class="layout-shell">
+    <aside class="dashboard-sidebar">
+        <div class="brand-box">
+            <div class="logo-box">
+                <img src="{% static 'img/logo_institucional.png' %}" alt="Logo institucional" class="institution-logo">
+            </div>
+            <div class="brand-text">
+                <h5>PRM Portafolio</h5>
+                <p>Professional Roadmap</p>
+            </div>
+        </div>
+
+         <div class="student-mini-card">
+            <div class="student-name">{{ student.nombre_completo }}</div>
+            <div>Grupo {{ student.grupo }}-{{ student.grado }}</div>
+            <div>{{ student.sede }}</div>
+        </div>
+
+         <div class="mobile-menu-panel d-lg-none" id="mobileMenuPanel">
+            <div class="nav-section-title">Menú</div>
+            <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link active">Talentos</a>
+            <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
+            <a href="#" class="sidebar-link">Valores</a>
+            <a href="#" class="sidebar-link">Recomendación</a>
+        </div>
+
+        <div class="d-none d-lg-block">
+            <div class="nav-section-title">Menú</div>
+            <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link active">Talentos</a>
+            <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
+            <a href="#" class="sidebar-link">Valores</a>
+            <a href="#" class="sidebar-link">Recomendación</a>
+        </div>
+        
+    </aside>
+
+    <header class="dashboard-header">
+        <div class="header-title">
+            <h4>Actualizar fotografía</h4>
+            <p>Ubica y centra tu imagen dentro del recuadro</p>
+        </div>
+        <div class="header-actions">
+            <a href="{% url 'student_dashboard' %}" class="btn btn-outline-secondary btn-sm">Volver al perfil</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="form-card">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb-4">
+                    <label class="form-label">Selecciona una fotografía</label>
+                    {{ form.foto }}
+                </div>
+
+                <div class="photo-preview-card mb-4">
+                    <div class="photo-preview-frame">
+                        {% if student.foto %}
+                            <img
+                                id="photo-preview"
+                                src="{{ student.foto.url }}"
+                                alt="Vista previa"
+                                class="student-photo-preview"
+                                style="object-position: {{ form.foto_pos_x.value|default:50 }}% {{ form.foto_pos_y.value|default:50 }}%;"
+                            >
+                        {% else %}
+                            <div id="photo-placeholder" class="student-photo-placeholder preview-placeholder">SIN FOTO</div>
+                            <img id="photo-preview" src="" alt="Vista previa" class="student-photo-preview d-none">
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Posición horizontal</label>
+                    {{ form.foto_pos_x }}
+                    <div class="range-value-box">
+                        Valor actual: <span id="posx-value">{{ form.foto_pos_x.value|default:50 }}</span>%
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Posición vertical</label>
+                    {{ form.foto_pos_y }}
+                    <div class="range-value-box">
+                        Valor actual: <span id="posy-value">{{ form.foto_pos_y.value|default:50 }}</span>%
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar fotografía</button>
+            </form>
+        </div>
+    </main>
+
+    <aside class="dashboard-aside">
+        <h4 class="section-title">Sugerencia</h4>
+        <div class="mentor-card">
+            <div class="mentor-note">
+                Usa una imagen clara, frontal y en formato JPG o PNG.
+            </div>
+            <div class="mentor-note">
+                Ajusta la posición horizontal y vertical hasta que el rostro quede centrado.
+            </div>
+        </div>
+    </aside>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const inputFile = document.getElementById("id_foto");
+    const preview = document.getElementById("photo-preview");
+    const placeholder = document.getElementById("photo-placeholder");
+    const posX = document.getElementById("id_foto_pos_x");
+    const posY = document.getElementById("id_foto_pos_y");
+    const posXValue = document.getElementById("posx-value");
+    const posYValue = document.getElementById("posy-value");
+
+    function updatePreviewPosition() {
+        if (preview && !preview.classList.contains("d-none")) {
+            preview.style.objectPosition = `${posX.value}% ${posY.value}%`;
+        }
+        if (posXValue) posXValue.textContent = posX.value;
+        if (posYValue) posYValue.textContent = posY.value;
+    }
+
+    if (inputFile) {
+        inputFile.addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.remove("d-none");
+                if (placeholder) placeholder.classList.add("d-none");
+                updatePreviewPosition();
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    if (posX) {
+        posX.addEventListener("input", updatePreviewPosition);
+    }
+
+    if (posY) {
+        posY.addEventListener("input", updatePreviewPosition);
+    }
+
+    updatePreviewPosition();
+</script>
+{% endblock %}

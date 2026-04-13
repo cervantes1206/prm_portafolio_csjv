@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mis fortalezas{% endblock %}
+
+{% block content %}
+<div class="layout-shell">
+    <aside class="dashboard-sidebar">
+        <div class="brand-box">
+            <div class="logo-box">
+                <img src="{% static 'img/logo_institucional.png' %}" alt="Logo institucional" class="institution-logo">
+            </div>
+            <div class="brand-text">
+                <h5>PRM Portafolio</h5>
+                <p>Professional Roadmap</p>
+            </div>
+        </div>
+
+         <div class="student-mini-card">
+            <div class="student-name">{{ student.nombre_completo }}</div>
+            <div>Grupo {{ student.grupo }}-{{ student.grado }}</div>
+            <div>{{ student.sede }}</div>
+        </div>
+
+        <button class="mobile-menu-toggle d-lg-none" type="button" id="mobileMenuToggle">
+            Menú del estudiante
+        </button>
+
+        <div class="mobile-menu-panel d-lg-none" id="mobileMenuPanel">
+            <div class="nav-section-title">Menú</div>
+            <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link active">Fortalezas</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Talentos</a>
+           <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
+            <a href="#" class="sidebar-link">Valores</a>
+            <a href="#" class="sidebar-link">Recomendación</a>
+        </div>
+
+        <div class="d-none d-lg-block">
+            <div class="nav-section-title">Menú</div>
+            <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link active">Fortalezas</a>
+            <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
+            <a href="#" class="sidebar-link">Intereses</a>
+            <a href="#" class="sidebar-link">Valores</a>
+            <a href="#" class="sidebar-link">Recomendación</a>
+        </div>
+    </aside>
+
+    <header class="dashboard-header">
+        <div class="header-title">
+            <h4>Mis fortalezas</h4>
+            <p>Gestiona y revisa tus fortalezas personales</p>
+        </div>
+        <div class="header-actions">
+            <a href="{% url 'strength_create' %}" class="btn btn-primary btn-sm">Nueva fortaleza</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="section-title mb-0">Listado de fortalezas</h3>
+        </div>
+
+        {% if strengths %}
+            <div class="row g-4">
+                {% for strength in strengths %}
+                    <div class="col-12 col-xl-6">
+                        <div class="strength-card">
+                            <div class="strength-title">{{ strength.titulo|upper }}</div>
+                            <div class="strength-meta">
+                                Nivel {{ strength.nivel_desarrollo }}/5 · {% widthratio strength.nivel_desarrollo 5 100 %}%
+                            </div>
+
+                            <div class="progress mb-3">
+                                <div
+                                    class="progress-bar"
+                                    role="progressbar"
+                                    style="width: {% widthratio strength.nivel_desarrollo 5 100 %}%;"
+                                    aria-valuenow="{% widthratio strength.nivel_desarrollo 5 100 %}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100">
+                                </div>
+                            </div>
+
+                            <p class="mb-2">{{ strength.descripcion }}</p>
+                            <p class="mb-3"><strong>Observaciones:</strong> {{ strength.observaciones|default:"-" }}</p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a href="{% url 'strength_update' strength.pk %}" class="btn btn-outline-primary btn-sm">
+                                    Editar
+                                </a>
+
+                                <form method="post" action="{% url 'strength_delete' strength.pk %}" onsubmit="return confirm('¿Deseas eliminar esta fortaleza?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Aún no tienes fortalezas registradas.
+            </div>
+        {% endif %}
+    </main>
+
+    <aside class="dashboard-aside">
+        <h4 class="section-title">Espacio del mentor</h4>
+
+        <div class="mentor-card">
+            <h6>Notas recientes</h6>
+            <div class="mentor-note">
+                Aquí el mentor podrá dejar observaciones personalizadas para el estudiante.
+            </div>
+            <div class="mentor-note">
+                Este espacio podrá mostrar retroalimentación sobre fortalezas y avances.
+            </div>
+        </div>
+
+        <div class="mentor-card">
+            <h6>Documentos compartidos</h6>
+            <span class="placeholder-chip">Guía de trabajo</span>
+            <span class="placeholder-chip">Retroalimentación</span>
+            <span class="placeholder-chip">Plan de mejora</span>
+        </div>
+    </aside>
+</div>
+
+<nav class="mobile-bottom-nav d-lg-none">
+    <a href="{% url 'student_dashboard' %}" class="mobile-bottom-link">Perfil</a>
+    <a href="{% url 'strength_list' %}" class="mobile-bottom-link active">Fortalezas</a>
+    <a href="{% url 'talent_list' %}" class="mobile-bottom-link">Talentos</a>
+    <a href="#" class="mobile-bottom-link">Intereses</a>
+    <a href="#" class="mobile-bottom-link">Valores</a>
+</nav>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const mobileMenuPanel = document.getElementById("mobileMenuPanel");
+
+    if (mobileMenuToggle && mobileMenuPanel) {
+        mobileMenuToggle.addEventListener("click", function () {
+            mobileMenuPanel.classList.toggle("open");
+        });
+    }
+</script>
+{% endblock %}

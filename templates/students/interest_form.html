@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% if modo_edicion %}Editar interés{% else %}Nuevo interés{% endif %}{% endblock %}
+
+{% block content %}
+<div class="layout-shell">
+    <aside class="dashboard-sidebar">
+        <div class="brand-box">
+            <div class="logo-box">
+                <img src="{% static 'img/logo_institucional.png' %}" alt="Logo institucional" class="institution-logo">
+            </div>
+            <div class="brand-text">
+                <h5>PRM Portafolio</h5>
+                <p>Professional Roadmap</p>
+            </div>
+        </div>
+
+          <div class="student-mini-card">
+            <div class="student-name">{{ student.nombre_completo }}</div>
+            <div>Grupo {{ student.grupo }}-{{ student.grado }}</div>
+            <div>{{ student.sede }}</div>
+        </div>
+
+
+        <button class="mobile-menu-toggle d-lg-none" type="button" id="mobileMenuToggle">
+            Menú del estudiante
+        </button>
+
+        <div class="mobile-menu-panel d-lg-none" id="mobileMenuPanel">
+            <div class="nav-section-title">Menú</div>
+            <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Talentos</a>
+            <a href="{% url 'interest_list' %}" class="sidebar-link active">Intereses</a>
+            <a href="#" class="sidebar-link">Valores</a>
+            <a href="#" class="sidebar-link">Recomendación</a>
+        </div>
+
+        <div class="d-none d-lg-block">
+            <div class="nav-section-title">Menú</div>
+            <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Talentos</a>
+            <a href="{% url 'interest_list' %}" class="sidebar-link active">Intereses</a>
+            <a href="#" class="sidebar-link">Valores</a>
+            <a href="#" class="sidebar-link">Recomendación</a>
+        </div>
+    </aside>
+
+    <header class="dashboard-header">
+        <div class="header-title">
+            <h4>{% if modo_edicion %}Editar interés{% else %}Nuevo interés{% endif %}</h4>
+            <p>Registra y actualiza tus intereses personales</p>
+        </div>
+        <div class="header-actions">
+            <a href="{% url 'interest_list' %}" class="btn btn-outline-secondary btn-sm">Volver al listado</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="mb-3">
+            <h3 class="section-title mb-0">
+                {% if modo_edicion %}Actualizar interés{% else %}Registrar interés{% endif %}
+            </h3>
+        </div>
+
+        <div class="form-card">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Título</label>
+                    {{ form.titulo }}
+                    <div class="form-text">Se guardará en mayúscula sostenida.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    {{ form.descripcion }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nivel de interés (1 a 5)</label>
+                    {{ form.nivel_interes }}
+                    <div class="range-value-box">
+                        Valor actual: <span id="range-value">{{ form.nivel_interes.value|default:3 }}</span>/5
+                    </div>
+                </div>
+
+                <div class="form-check mb-3">
+                    {{ form.visible_dashboard }}
+                    <label class="form-check-label" for="{{ form.visible_dashboard.id_for_label }}">
+                        Mostrar en perfil
+                    </label>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Observaciones</label>
+                    {{ form.observaciones }}
+                </div>
+
+                <div class="d-flex gap-2 flex-wrap">
+                    <button type="submit" class="btn btn-primary">
+                        {% if modo_edicion %}Guardar cambios{% else %}Guardar interés{% endif %}
+                    </button>
+                    <a href="{% url 'interest_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <aside class="dashboard-aside">
+        <h4 class="section-title">Espacio del mentor</h4>
+        <div class="mentor-card">
+            <h6>Orientación</h6>
+            <div class="mentor-note">
+                Describe el interés con claridad y señala qué tanto motiva o atrae al estudiante.
+            </div>
+        </div>
+    </aside>
+</div>
+
+<nav class="mobile-bottom-nav d-lg-none">
+    <a href="{% url 'student_dashboard' %}" class="mobile-bottom-link">Perfil</a>
+    <a href="{% url 'strength_list' %}" class="mobile-bottom-link">Fortalezas</a>
+    <a href="{% url 'talent_list' %}" class="mobile-bottom-link">Talentos</a>
+    <a href="{% url 'interest_list' %}" class="mobile-bottom-link active">Intereses</a>
+    <a href="#" class="mobile-bottom-link">Valores</a>
+</nav>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const rangeInput = document.getElementById("id_nivel_interes");
+    const rangeValue = document.getElementById("range-value");
+
+    if (rangeInput && rangeValue) {
+        rangeValue.textContent = rangeInput.value || 3;
+        rangeInput.addEventListener("input", function () {
+            rangeValue.textContent = this.value;
+        });
+    }
+
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const mobileMenuPanel = document.getElementById("mobileMenuPanel");
+
+    if (mobileMenuToggle && mobileMenuPanel) {
+        mobileMenuToggle.addEventListener("click", function () {
+            mobileMenuPanel.classList.toggle("open");
+        });
+    }
+</script>
+{% endblock %}

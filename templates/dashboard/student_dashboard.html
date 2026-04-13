@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mi perfil{% endblock %}
+
+{% block content %}
+<div class="layout-shell">
+    <aside class="dashboard-sidebar">
+        <div class="brand-box">
+            <div class="logo-box">
+                <img src="{% static 'img/logo_institucional.png' %}" alt="Logo institucional" class="institution-logo">
+            </div>
+            <div class="brand-text">
+                <h5>PRM Portafolio</h5>
+                <p>Professional Roadmap</p>
+            </div>
+        </div>
+
+        <div class="student-mini-card">
+            <div class="student-name">{{ student.nombre_completo }}</div>
+            <div>Grupo {{ student.grupo }}-{{ student.grado }}</div>
+            <div>{{ student.sede }}</div>
+        </div>
+
+        <button class="mobile-menu-toggle d-lg-none" type="button" id="mobileMenuToggle">
+            Menú del estudiante
+        </button>
+
+        <div class="mobile-menu-panel d-lg-none" id="mobileMenuPanel">
+            <div class="nav-section-title">Menú</div>
+            <a href="{% url 'student_dashboard' %}" class="sidebar-link active">Perfil</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Talentos</a>
+            <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
+            <a href="#" class="sidebar-link">Valores</a>
+            <a href="#" class="sidebar-link">Recomendación</a>
+        </div>
+
+        <div class="d-none d-lg-block">
+            <div class="nav-section-title">Menú</div>
+            <a href="{% url 'student_dashboard' %}" class="sidebar-link active">Perfil</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Talentos</a>
+           <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
+            <a href="#" class="sidebar-link">Valores</a>
+            <a href="#" class="sidebar-link">Recomendación</a>
+        </div>
+    </aside>
+
+    <header class="dashboard-header">
+        <div class="header-title">
+            <h4>Mi perfil</h4>
+            <p>Professional Roadmap del estudiante</p>
+        </div>
+        <div class="header-actions">
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <section class="profile-hero-card">
+            <div class="profile-hero-left">
+                <div class="student-photo-box">
+                    <div class="student-photo-wrapper">
+                        {% if student.foto %}
+                            <img
+                                src="{{ student.foto.url }}"
+                                alt="Foto de {{ student.nombre_completo }}"
+                                class="student-photo"
+                                style="object-position: {{ student.foto_pos_x }}% {{ student.foto_pos_y }}%;"
+                            >
+                        {% else %}
+                            <div class="student-photo-placeholder">SIN FOTO</div>
+                        {% endif %}
+
+                        <a href="{% url 'student_photo_update' %}" class="photo-edit-button" title="Actualizar foto">
+                            ✏️
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-hero-right">
+                <div class="profile-badge">PERFIL DEL ESTUDIANTE</div>
+                <h2 class="profile-student-name">{{ student.nombre_completo }}</h2>
+
+                <div class="profile-summary-grid">
+                    <div class="profile-summary-item">
+                        <span class="profile-summary-label">Edad y nacimiento</span>
+                        <span class="profile-summary-value">{{ student.edad }} años · {{ student.fecha_nacimiento }}</span>
+                    </div>
+
+                    <div class="profile-summary-item">
+                        <span class="profile-summary-label">Curso</span>
+                        <span class="profile-summary-value">{{ student.grado }}{{ student.grupo }} · {{ student.sede }}</span>
+                    </div>
+
+                    <div class="profile-summary-item">
+                        <span class="profile-summary-label">Año</span>
+                        <span class="profile-summary-value">{{ student.anio }}</span>
+                    </div>
+
+                    <div class="profile-summary-item">
+                        <span class="profile-summary-label">Correo</span>
+                        <span class="profile-summary-value">{{ student.correo_institucional }}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="row g-4">
+            <div class="col-12 col-xl-6">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="section-title mb-0">Fortalezas</h3>
+                    <a href="{% url 'strength_list' %}" class="btn btn-outline-primary btn-sm">Ver todas</a>
+                </div>
+
+                {% if strengths %}
+                    <div class="strength-card chart-card-adaptive">
+                        <div class="chart-card-header">
+                            <span class="chart-card-kicker">TOP FORTALEZAS</span>
+                        </div>
+                        <div class="chart-canvas-radar">
+                            <canvas id="strengthsRadarChart"></canvas>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">Aún no hay fortalezas visibles en tu perfil.</div>
+                {% endif %}
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="section-title mb-0">Talentos</h3>
+                    <a href="{% url 'talent_list' %}" class="btn btn-outline-primary btn-sm">Ver todos</a>
+                </div>
+
+                {% if talents %}
+                    <div class="strength-card chart-card-adaptive">
+                        <div class="chart-card-header">
+                            <span class="chart-card-kicker">TOP TALENTOS</span>
+                        </div>
+                        <div class="chart-canvas-bars chart-canvas-bars-{{ talents|length }}">
+                            <canvas id="talentsBarChart"></canvas>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">Aún no hay talentos visibles en tu perfil.</div>
+                {% endif %}
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="section-title mb-0">Intereses</h3>
+                    <a href="{% url 'interest_list' %}" class="btn btn-outline-primary btn-sm">Ver todos</a>
+                </div>
+
+                {% if interests %}
+                    <div class="strength-card chart-card-adaptive chart-card-interest">
+                        <div class="chart-card-header">
+                            <span class="chart-card-kicker">TOP INTERESES</span>
+                        </div>
+                        <div class="chart-canvas-doughnut">
+                            <canvas id="interestsDoughnutChart"></canvas>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">Aún no hay intereses visibles en tu perfil.</div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <aside class="dashboard-aside">
+        <h4 class="section-title">Espacio del mentor</h4>
+
+        <div class="mentor-card">
+            <h6>Notas recientes</h6>
+            <div class="mentor-note">
+                Aquí el mentor podrá dejar observaciones personalizadas para el estudiante.
+            </div>
+            <div class="mentor-note">
+                Más adelante este espacio mostrará alertas y notificaciones nuevas.
+            </div>
+        </div>
+
+        <div class="mentor-card">
+            <h6>Documentos compartidos</h6>
+            <span class="placeholder-chip">Guía de trabajo</span>
+            <span class="placeholder-chip">Retroalimentación</span>
+            <span class="placeholder-chip">Plan de mejora</span>
+        </div>
+    </aside>
+</div>
+
+<nav class="mobile-bottom-nav d-lg-none">
+    <a href="{% url 'student_dashboard' %}" class="mobile-bottom-link active">Perfil</a>
+    <a href="{% url 'strength_list' %}" class="mobile-bottom-link">Fortalezas</a>
+    <a href="{% url 'talent_list' %}" class="mobile-bottom-link">Talentos</a>
+    <a href="{% url 'interest_list' %}" class="mobile-bottom-link">Intereses</a>
+    <a href="#" class="mobile-bottom-link">Valores</a>
+</nav>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const radarLabels = {{ radar_labels_json|safe }};
+    const radarValues = {{ radar_values_json|safe }};
+    const talentLabels = {{ talent_labels_json|safe }};
+    const talentValues = {{ talent_values_json|safe }};
+    const interestLabels = {{ interest_labels_json|safe }};
+    const interestValues = {{ interest_values_json|safe }};
+
+    const radarCanvas = document.getElementById("strengthsRadarChart");
+    const talentCanvas = document.getElementById("talentsBarChart");
+    const interestCanvas = document.getElementById("interestsDoughnutChart");
+
+    if (radarCanvas && radarLabels.length > 0) {
+        new Chart(radarCanvas, {
+            type: "radar",
+            data: {
+                labels: radarLabels,
+                datasets: [{
+                    label: "Nivel de desarrollo",
+                    data: radarValues,
+                    fill: true,
+                    backgroundColor: "rgba(18, 165, 223, 0.2)",
+                    borderColor: "#12a5df",
+                    pointBackgroundColor: "#1c264e",
+                    pointBorderColor: "#ffffff",
+                    pointHoverBackgroundColor: "#ffffff",
+                    pointHoverBorderColor: "#1c264e",
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    r: {
+                        min: 0,
+                        max: 5,
+                        ticks: {
+                            stepSize: 1,
+                            backdropColor: "transparent"
+                        },
+                        pointLabels: {
+                            font: { size: 12 }
+                        },
+                        grid: { color: "#dbe7f3" },
+                        angleLines: { color: "#dbe7f3" }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+
+    if (talentCanvas && talentLabels.length > 0) {
+        new Chart(talentCanvas, {
+            type: "bar",
+            data: {
+                labels: talentLabels,
+                datasets: [{
+                    label: "Porcentaje de desarrollo",
+                    data: talentValues,
+                    backgroundColor: "rgba(28, 38, 78, 0.88)",
+                    borderRadius: 12,
+                    borderSkipped: false,
+                    barThickness: 14,
+                    maxBarThickness: 16,
+                    categoryPercentage: 0.7,
+                    barPercentage: 0.8
+                }]
+            },
+            options: {
+                indexAxis: "y",
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: { top: 4, bottom: 4, left: 4, right: 8 }
+                },
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        min: 0,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) { return value + "%"; }
+                        },
+                        grid: { color: "#e6eef7" },
+                        border: { display: false }
+                    },
+                    y: {
+                        grid: { display: false },
+                        border: { display: false },
+                        ticks: {
+                            font: { size: 11 }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    if (interestCanvas && interestLabels.length > 0) {
+        new Chart(interestCanvas, {
+            type: "doughnut",
+            data: {
+                labels: interestLabels,
+                datasets: [{
+                    data: interestValues,
+                    backgroundColor: [
+                        "#1c264e",
+                        "#12a5df",
+                        "#4f46e5",
+                        "#0ea5a4",
+                        "#94a3b8"
+                    ],
+                    borderColor: "#ffffff",
+                    borderWidth: 2,
+                    hoverOffset: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "62%",
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            boxWidth: 12,
+                            padding: 14
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const mobileMenuPanel = document.getElementById("mobileMenuPanel");
+
+    if (mobileMenuToggle && mobileMenuPanel) {
+        mobileMenuToggle.addEventListener("click", function () {
+            mobileMenuPanel.classList.toggle("open");
+        });
+    }
+</script>
+{% endblock %}
