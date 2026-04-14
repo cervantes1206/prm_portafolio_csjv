@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Mis talentos{% endblock %}
+{% block title %}Mis habilidades técnicas{% endblock %}
 
 {% block content %}
 <div class="layout-shell">
@@ -28,8 +28,8 @@
         <div class="mobile-menu-panel d-lg-none" id="mobileMenuPanel">
             <div class="nav-section-title">Menú</div>
             <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
-            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
-            <a href="{% url 'talent_list' %}" class="sidebar-link active">Talentos</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Habilidades socioemocionales</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link active">Inmersiones</a>
             <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
             <a href="#" class="sidebar-link">Valores</a>
             <a href="#" class="sidebar-link">Recomendación</a>
@@ -38,8 +38,8 @@
         <div class="d-none d-lg-block">
             <div class="nav-section-title">Menú</div>
             <a href="{% url 'student_dashboard' %}" class="sidebar-link">Perfil</a>
-            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
-            <a href="{% url 'talent_list' %}" class="sidebar-link active">Talentos</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Habilidades socioemocionales</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link active">Inmersiones</a>
             <a href="#" class="sidebar-link">Intereses</a>
             <a href="#" class="sidebar-link">Valores</a>
             <a href="#" class="sidebar-link">Recomendación</a>
@@ -48,18 +48,18 @@
 
     <header class="dashboard-header">
         <div class="header-title">
-            <h4>Mis talentos</h4>
-            <p>Gestiona y revisa tus talentos personales</p>
+            <h4>Mis habilidades técnicas</h4>
+            <p>Gestiona y revisa tus habilidades técnicas personales</p>
         </div>
         <div class="header-actions">
-            <a href="{% url 'talent_create' %}" class="btn btn-primary btn-sm">Nuevo talento</a>
+            <a href="{% url 'talent_create' %}" class="btn btn-primary btn-sm">Nueva habilidad técnica</a>
             <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
         </div>
     </header>
 
     <main class="dashboard-main">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="section-title mb-0">Listado de talentos</h3>
+            <h3 class="section-title mb-0">Listado de habilidades técnicas</h3>
         </div>
 
         {% if talents %}
@@ -91,7 +91,7 @@
                                     Editar
                                 </a>
 
-                                <form method="post" action="{% url 'talent_delete' talent.pk %}" onsubmit="return confirm('¿Deseas eliminar este talento?');">
+                                <form method="post" action="{% url 'talent_delete' talent.pk %}" onsubmit="return confirm('¿Deseas eliminar esta habilidad técnica?');">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                         Eliminar
@@ -104,7 +104,7 @@
             </div>
         {% else %}
             <div class="alert alert-info">
-                Aún no tienes talentos registrados.
+                Aún no tienes habilidades técnicas registradas.
             </div>
         {% endif %}
     </main>
@@ -115,7 +115,7 @@
         <div class="mentor-card">
             <h6>Notas recientes</h6>
             <div class="mentor-note">
-                Aquí el mentor podrá dejar observaciones personalizadas sobre los talentos del estudiante.
+                Aquí el mentor podrá dejar observaciones personalizadas sobre las habilidades técnicas del estudiante.
             </div>
         </div>
 
@@ -130,8 +130,8 @@
 
 <nav class="mobile-bottom-nav d-lg-none">
     <a href="{% url 'student_dashboard' %}" class="mobile-bottom-link">Perfil</a>
-    <a href="{% url 'strength_list' %}" class="mobile-bottom-link">Fortalezas</a>
-    <a href="{% url 'talent_list' %}" class="mobile-bottom-link active">Talentos</a>
+    <a href="{% url 'strength_list' %}" class="mobile-bottom-link">Habilidades socioemocionales</a>
+    <a href="{% url 'talent_list' %}" class="mobile-bottom-link active">Inmersiones</a>
     <a href="#" class="mobile-bottom-link">Intereses</a>
     <a href="#" class="mobile-bottom-link">Valores</a>
 </nav>

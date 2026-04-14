@@ -28,8 +28,8 @@
         <div class="mobile-menu-panel d-lg-none" id="mobileMenuPanel">
             <div class="nav-section-title">Menú</div>
             <a href="{% url 'student_dashboard' %}" class="sidebar-link active">Perfil</a>
-            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
-            <a href="{% url 'talent_list' %}" class="sidebar-link">Talentos</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Habilidades socioemocionales</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Habilidades técnicas</a>
             <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
             <a href="#" class="sidebar-link">Valores</a>
             <a href="#" class="sidebar-link">Recomendación</a>
@@ -38,8 +38,8 @@
         <div class="d-none d-lg-block">
             <div class="nav-section-title">Menú</div>
             <a href="{% url 'student_dashboard' %}" class="sidebar-link active">Perfil</a>
-            <a href="{% url 'strength_list' %}" class="sidebar-link">Fortalezas</a>
-            <a href="{% url 'talent_list' %}" class="sidebar-link">Talentos</a>
+            <a href="{% url 'strength_list' %}" class="sidebar-link">Habilidades socioemocionales</a>
+            <a href="{% url 'talent_list' %}" class="sidebar-link">Habilidades técnicas</a>
            <a href="{% url 'interest_list' %}" class="sidebar-link">Intereses</a>
             <a href="#" class="sidebar-link">Valores</a>
             <a href="#" class="sidebar-link">Recomendación</a>
@@ -110,41 +110,41 @@
         <div class="row g-4">
             <div class="col-12 col-xl-6">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="section-title mb-0">Fortalezas</h3>
+                    <h3 class="section-title mb-0">Habilidades socioemocionales</h3>
                     <a href="{% url 'strength_list' %}" class="btn btn-outline-primary btn-sm">Ver todas</a>
                 </div>
 
                 {% if strengths %}
                     <div class="strength-card chart-card-adaptive">
                         <div class="chart-card-header">
-                            <span class="chart-card-kicker">TOP FORTALEZAS</span>
+                            <span class="chart-card-kicker">TOP HABILIDADES SOCIOEMOCIONALES</span>
                         </div>
                         <div class="chart-canvas-radar">
                             <canvas id="strengthsRadarChart"></canvas>
                         </div>
                     </div>
                 {% else %}
-                    <div class="alert alert-info">Aún no hay fortalezas visibles en tu perfil.</div>
+                    <div class="alert alert-info">Aún no hay habilidades socioemocionales visibles en tu perfil.</div>
                 {% endif %}
             </div>
 
             <div class="col-12 col-xl-6">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="section-title mb-0">Talentos</h3>
+                    <h3 class="section-title mb-0">Habilidades técnicas</h3>
                     <a href="{% url 'talent_list' %}" class="btn btn-outline-primary btn-sm">Ver todos</a>
                 </div>
 
                 {% if talents %}
                     <div class="strength-card chart-card-adaptive">
                         <div class="chart-card-header">
-                            <span class="chart-card-kicker">TOP TALENTOS</span>
+                            <span class="chart-card-kicker">TOP HABILIDADES TÉCNICAS</span>
                         </div>
                         <div class="chart-canvas-bars chart-canvas-bars-{{ talents|length }}">
-                            <canvas id="talentsBarChart"></canvas>
+                            <canvas id="technicalSkillsBarChart"></canvas>
                         </div>
                     </div>
                 {% else %}
-                    <div class="alert alert-info">Aún no hay talentos visibles en tu perfil.</div>
+                    <div class="alert alert-info">Aún no hay habilidades técnicas visibles en tu perfil.</div>
                 {% endif %}
             </div>
 
@@ -194,8 +194,8 @@
 
 <nav class="mobile-bottom-nav d-lg-none">
     <a href="{% url 'student_dashboard' %}" class="mobile-bottom-link active">Perfil</a>
-    <a href="{% url 'strength_list' %}" class="mobile-bottom-link">Fortalezas</a>
-    <a href="{% url 'talent_list' %}" class="mobile-bottom-link">Talentos</a>
+    <a href="{% url 'strength_list' %}" class="mobile-bottom-link">Habilidades socioemocionales</a>
+    <a href="{% url 'talent_list' %}" class="mobile-bottom-link">Habilidades técnicas</a>
     <a href="{% url 'interest_list' %}" class="mobile-bottom-link">Intereses</a>
     <a href="#" class="mobile-bottom-link">Valores</a>
 </nav>
@@ -206,13 +206,13 @@
 <script>
     const radarLabels = {{ radar_labels_json|safe }};
     const radarValues = {{ radar_values_json|safe }};
-    const talentLabels = {{ talent_labels_json|safe }};
-    const talentValues = {{ talent_values_json|safe }};
+    const technicalSkillLabels = {{ talent_labels_json|safe }};
+    const technicalSkillValues = {{ talent_values_json|safe }};
     const interestLabels = {{ interest_labels_json|safe }};
     const interestValues = {{ interest_values_json|safe }};
 
     const radarCanvas = document.getElementById("strengthsRadarChart");
-    const talentCanvas = document.getElementById("talentsBarChart");
+    const technicalSkillsCanvas = document.getElementById("technicalSkillsBarChart");
     const interestCanvas = document.getElementById("interestsDoughnutChart");
 
     if (radarCanvas && radarLabels.length > 0) {
@@ -258,14 +258,14 @@
         });
     }
 
-    if (talentCanvas && talentLabels.length > 0) {
-        new Chart(talentCanvas, {
+    if (technicalSkillsCanvas && technicalSkillLabels.length > 0) {
+        new Chart(technicalSkillsCanvas, {
             type: "bar",
             data: {
-                labels: talentLabels,
+                labels: technicalSkillLabels,
                 datasets: [{
-                    label: "Porcentaje de desarrollo",
-                    data: talentValues,
+                    label: "Porcentaje de dominio",
+                    data: technicalSkillValues,
                     backgroundColor: "rgba(28, 38, 78, 0.88)",
                     borderRadius: 12,
                     borderSkipped: false,
