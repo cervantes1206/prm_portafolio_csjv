@@ -2,6 +2,21 @@ from django.conf import settings
 from django.db import models
 
 
+class Archetype(models.Model):
+    name = models.CharField(max_length=120, unique=True)
+    description = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "archetypes"
+        verbose_name = "arquetipo"
+        verbose_name_plural = "arquetipos"
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
 class Student(models.Model):
     GENDER_CHOICES = [
         ("Masculino", "Masculino"),
@@ -36,7 +51,6 @@ class Student(models.Model):
     foto_pos_x = models.PositiveSmallIntegerField(default=50)
     foto_pos_y = models.PositiveSmallIntegerField(default=50)
 
-
     fecha_nacimiento = models.DateField()
     edad = models.PositiveIntegerField()
     genero = models.CharField(max_length=20, choices=GENDER_CHOICES)
@@ -46,6 +60,14 @@ class Student(models.Model):
     anio = models.PositiveIntegerField()
     sede = models.CharField(max_length=100)
     school_level = models.CharField(max_length=30)
+
+    arquetipo = models.ForeignKey(
+        Archetype,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="students",
+    )
 
     nombre_padre = models.CharField(max_length=255, blank=True, null=True)
     telefono_padre = models.CharField(max_length=30, blank=True, null=True)
@@ -87,7 +109,10 @@ class Strength(models.Model):
     )
     titulo = models.CharField(max_length=150)
     descripcion = models.TextField()
-    nivel_desarrollo = models.PositiveSmallIntegerField(choices=DEVELOPMENT_LEVEL_CHOICES, default=3)
+    nivel_desarrollo = models.PositiveSmallIntegerField(
+        choices=DEVELOPMENT_LEVEL_CHOICES,
+        default=3
+    )
     visible_dashboard = models.BooleanField(default=True)
     observaciones = models.TextField(blank=True, null=True)
 
@@ -102,11 +127,12 @@ class Strength(models.Model):
 
     def __str__(self):
         return f"{self.titulo} - {self.student.nombre_completo}"
-    
+
     def save(self, *args, **kwargs):
         if self.titulo:
             self.titulo = self.titulo.upper().strip()
         super().save(*args, **kwargs)
+
 
 class Talent(models.Model):
     DEVELOPMENT_LEVEL_CHOICES = [
@@ -124,7 +150,10 @@ class Talent(models.Model):
     )
     titulo = models.CharField(max_length=150)
     descripcion = models.TextField()
-    nivel_desarrollo = models.PositiveSmallIntegerField(choices=DEVELOPMENT_LEVEL_CHOICES, default=3)
+    nivel_desarrollo = models.PositiveSmallIntegerField(
+        choices=DEVELOPMENT_LEVEL_CHOICES,
+        default=3
+    )
     visible_dashboard = models.BooleanField(default=True)
     observaciones = models.TextField(blank=True, null=True)
 
@@ -145,6 +174,7 @@ class Talent(models.Model):
             self.titulo = self.titulo.upper().strip()
         super().save(*args, **kwargs)
 
+
 class Interest(models.Model):
     DEVELOPMENT_LEVEL_CHOICES = [
         (1, "Muy bajo"),
@@ -161,7 +191,10 @@ class Interest(models.Model):
     )
     titulo = models.CharField(max_length=150)
     descripcion = models.TextField()
-    nivel_interes = models.PositiveSmallIntegerField(choices=DEVELOPMENT_LEVEL_CHOICES, default=3)
+    nivel_interes = models.PositiveSmallIntegerField(
+        choices=DEVELOPMENT_LEVEL_CHOICES,
+        default=3
+    )
     visible_dashboard = models.BooleanField(default=True)
     observaciones = models.TextField(blank=True, null=True)
 
@@ -180,4 +213,119 @@ class Interest(models.Model):
     def save(self, *args, **kwargs):
         if self.titulo:
             self.titulo = self.titulo.upper().strip()
+        super().save(*args, **kwargs)
+
+
+class SocioEmotionalSkill(models.Model):
+    DEVELOPMENT_LEVEL_CHOICES = [
+        (1, "Inicial"),
+        (2, "Básico"),
+        (3, "Intermedio"),
+        (4, "Alto"),
+        (5, "Sobresaliente"),
+    ]
+
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE,
+        related_name="socio_emotional_skills",
+    )
+    arquetipo = models.ForeignKey(
+        Archetype,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="socio_emotional_skills",
+    )
+    titulo = models.CharField(max_length=150)
+    idg_dimension = models.CharField(max_length=80, blank=True, null=True)
+    nivel_desarrollo = models.PositiveSmallIntegerField(
+        choices=DEVELOPMENT_LEVEL_CHOICES,
+        default=3
+    )
+    mentor_nivel = models.PositiveSmallIntegerField(
+        choices=DEVELOPMENT_LEVEL_CHOICES,
+        blank=True,
+        null=True
+    )
+    visible_dashboard = models.BooleanField(default=True)
+    comentario_estudiante = models.TextField(blank=True, null=True)
+    comentario_mentor = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="updated_socio_emotional_skills",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "socio_emotional_skills"
+        verbose_name = "habilidad socioemocional nueva"
+        verbose_name_plural = "habilidades socioemocionales nuevas"
+        ordering = ["-nivel_desarrollo", "titulo"]
+        unique_together = ("student", "titulo")
+
+    def __str__(self):
+        return f"{self.titulo} - {self.student.nombre_completo}"
+
+    def save(self, *args, **kwargs):
+        if self.titulo:
+            self.titulo = self.titulo.strip()
+        super().save(*args, **kwargs)
+
+
+class TechnicalSkill(models.Model):
+    DEVELOPMENT_LEVEL_CHOICES = [
+        (1, "Inicial"),
+        (2, "Básico"),
+        (3, "Intermedio"),
+        (4, "Alto"),
+        (5, "Sobresaliente"),
+    ]
+
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE,
+        related_name="technical_skills",
+    )
+    arquetipo = models.ForeignKey(
+        Archetype,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="technical_skills",
+    )
+    titulo = models.CharField(max_length=150)
+    school_year = models.PositiveIntegerField(default=2026)
+    nivel_desarrollo = models.PositiveSmallIntegerField(
+        choices=DEVELOPMENT_LEVEL_CHOICES,
+        default=1
+    )
+    progreso_porcentaje = models.PositiveSmallIntegerField(default=0)
+    visible_dashboard = models.BooleanField(default=True)
+    ruta_aprendizaje = models.TextField(blank=True, null=True)
+    observaciones = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "technical_skills"
+        verbose_name = "habilidad técnica nueva"
+        verbose_name_plural = "habilidades técnicas nuevas"
+        ordering = ["-nivel_desarrollo", "titulo"]
+        unique_together = ("student", "titulo", "school_year")
+
+    def __str__(self):
+        return f"{self.titulo} - {self.student.nombre_completo} ({self.school_year})"
+
+    def save(self, *args, **kwargs):
+        if self.titulo:
+            self.titulo = self.titulo.strip()
         super().save(*args, **kwargs)
